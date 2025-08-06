@@ -9,6 +9,10 @@ import SwiftUI
 
 struct CustomCellView: View {
     
+    let name: String
+    let ability: String
+    let imageURL: String
+    
     var body: some View {
         ZStack {
             Color.white
@@ -31,7 +35,7 @@ struct CustomCellView: View {
     
     private var nameLabel: some View {
         HStack {
-            Text("PIKACHU")
+            Text(name.uppercased())
                 .font(.custom("Lato-Bold", size: 13))
                 .foregroundColor(Color("nameLabelRedColor"))
             Spacer()
@@ -41,7 +45,7 @@ struct CustomCellView: View {
     
     private var abilityLabel: some View {
         HStack {
-            Text("static")
+            Text(ability.lowercased())
                 .font(.custom("Lato-Regular", size: 11))
                 .foregroundColor(Color("abilityLabelGreyColor"))
             
@@ -52,14 +56,24 @@ struct CustomCellView: View {
     private var pokemonsImage: some View {
         HStack {
             Spacer()
-            Image(systemName: "person.icloud")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            pokemonImageView(urlString: imageURL)
         }
         .padding(.top, 32)
     }
-}
-
-#Preview {
-    CustomCellView()
+    
+    // MARK: - Private helpers
+    private func pokemonImageView(urlString: String) -> some View {
+        Group {
+            if let url = URL(string: urlString), !urlString.isEmpty {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } placeholder: {
+                    ProgressView()
+                        .frame(width: 48, height: 48)
+                }
+            }
+        }
+    }
 }

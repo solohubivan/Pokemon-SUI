@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    let items = (1...25)
+    @State private var viewModel = MainViewModel()
     
     let columns = [
         GridItem(.flexible(), spacing: 8),
@@ -21,6 +21,9 @@ struct MainView: View {
             Color.white.ignoresSafeArea()
             backgroundImage
             contentView
+        }
+        .onAppear {
+            viewModel.fetchPokemons()
         }
     }
     
@@ -54,12 +57,26 @@ struct MainView: View {
     
     private var pokemonsList: some View {
         LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(items, id: \.self) { num in
-                CustomCellView()
-                    .aspectRatio(1.481, contentMode: .fit)
-                    .onTapGesture {
-                        print("Обрана ячейка №\(num)")
+            ForEach(Array(viewModel.pokemons.enumerated()), id: \.element) { idx, pokemon in
+                CustomCellView(
+                    name: pokemon.name,
+                    ability: pokemon.abilities?.first ?? "",
+                    imageURL: pokemon.imageURL ?? ""
+                )
+                .aspectRatio(1.481, contentMode: .fit)
+                .onAppear {
+
+                    if idx >= viewModel.pokemons.count - 3 {
+                        viewModel.fetchPokemons()
                     }
+                }
+                .onTapGesture {
+                    print("Обрана ячейка №\(pokemon)")
+                }
+            }
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(height: 60)
             }
         }
         .padding(.horizontal, 24)
