@@ -36,7 +36,7 @@ struct CustomCellView: View {
     private var nameLabel: some View {
         HStack {
             Text(name.uppercased())
-                .font(.custom("Lato-Bold", size: 13))
+                .font(.custom(AppConstants.Fonts.latoBold, size: 13))
                 .foregroundColor(Color("selectedRedColor"))
             Spacer()
         }
@@ -46,7 +46,7 @@ struct CustomCellView: View {
     private var abilityLabel: some View {
         HStack {
             Text(ability.lowercased())
-                .font(.custom("Lato-Regular", size: 11))
+                .font(.custom(AppConstants.Fonts.latoRegular, size: 11))
                 .foregroundColor(Color("abilityLabelGreyColor"))
             
             Spacer()
@@ -56,7 +56,7 @@ struct CustomCellView: View {
     private var pokemonsImage: some View {
         HStack {
             Spacer()
-            RemoteImage(urlString: imageURL)
+            RemoteImageView(urlString: imageURL)
         }
         .padding(.top, 32)
     }

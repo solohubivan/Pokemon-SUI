@@ -16,9 +16,14 @@ final class DetailPokemonInfoViewModel {
     var isLoading = false
 
     private let api = ApiDataManager()
-    
+    private let cache = PokemonCacheManager.shared
+
     func configure(with pokemon: Pokemon) {
-        self.pokemon = pokemon
+        if let cached = cache.load(for: pokemon.url) {
+            self.pokemon = cached
+        } else {
+            self.pokemon = pokemon
+        }
         loadIfNeeded()
     }
 
@@ -34,6 +39,7 @@ final class DetailPokemonInfoViewModel {
                 self.isLoading = false
                 if case let .success(updated) = result {
                     self.pokemon = updated
+                    self.cache.save(updated)
                 }
             }
         }

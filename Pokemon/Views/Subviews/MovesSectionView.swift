@@ -14,11 +14,11 @@ struct MovesSectionView: View {
     var body: some View {
         ScrollView {
             Text("There are available moves:")
-                .font(.custom("Lato-Semibold", size: 16))
+                .font(.custom(AppConstants.Fonts.latoSemibold, size: 16))
                 .foregroundColor(.black)
                 
             Text(joinedMoves())
-                .font(.custom("Lato-Regular", size: 14))
+                .font(.custom(AppConstants.Fonts.latoRegular, size: 14))
                 .foregroundColor(.black)
                 .padding(.horizontal, 20)
                 .padding(.top, 2)

@@ -30,13 +30,13 @@ struct EvolutionSectionView: View {
     private func row(_ label: String, _ value: String) -> some View {
         HStack(alignment: .top, spacing: 12) {
             Text(label)
-                .font(.custom("Lato-Regular", size: 13))
+                .font(.custom(AppConstants.Fonts.latoRegular, size: 13))
                 .foregroundColor(.black)
                 .frame(width: 120, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
-                .font(.custom("Lato-Regular", size: 13))
+                .font(.custom(AppConstants.Fonts.latoRegular, size: 13))
                 .foregroundColor(Color(.abilityLabelGrey))
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()

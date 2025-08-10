@@ -35,7 +35,7 @@ struct DetailPokemonInfoView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Image("leftArrow")
+                        Image(AppConstants.ImagesNames.dismissButtonIconImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 16, height: 16)
@@ -57,7 +57,7 @@ struct DetailPokemonInfoView: View {
     private var nameLabel: some View {
         HStack {
             Text(viewModel.pokemon?.name.capitalized ?? "")
-                .font(.custom("Lato-Bold", size: 24))
+                .font(.custom(AppConstants.Fonts.latoBold, size: 24))
                 .foregroundColor(Color("titleLabelBlackColor"))
                 .padding(.leading, 24)
                 .padding(.top, 32)
@@ -66,7 +66,7 @@ struct DetailPokemonInfoView: View {
     }
     
     private var mainImage: some View {
-        RemoteImage(urlString: viewModel.pokemon?.imageURL ?? "")
+        RemoteImageView(urlString: viewModel.pokemon?.imageURL)
             .frame(height: 200)
             .padding(.top, 40)
     }
@@ -81,7 +81,7 @@ struct DetailPokemonInfoView: View {
                     createModeButton(
                         title: mode.rawValue,
                         color: viewModel.selectedMode == mode ? Color("selectedRedColor") : Color.black,
-                        font: .custom("Lato-Regular", size: 14),
+                        font: .custom(AppConstants.Fonts.latoRegular, size: 14),
                         isActive: viewModel.selectedMode == mode
                     ) {
                         viewModel.selectedMode = mode
@@ -177,6 +177,12 @@ struct DetailPokemonInfoView: View {
     }
 }
 
-//#Preview {
-//    DetailPokemonInfoView(pokemon: Pokemon(name: "Huy", url: ""))
-//}
+#Preview {
+    DetailPokemonInfoView(
+        choosedPokemon: Pokemon(
+            name: "pikachu",
+            url: "https://pokeapi.co/api/v2/pokemon/25/",
+            imageURL: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+        )
+    )
+}

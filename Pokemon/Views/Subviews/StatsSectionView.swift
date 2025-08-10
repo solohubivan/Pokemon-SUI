@@ -47,7 +47,7 @@ struct StatsSectionView: View {
     // MARK: - Local helper
     private func createInfoLabel(_ text: String, color: UIColor = .black) -> some View {
         Text(text)
-            .font(.custom("Lato-Regular", size: 13))
+            .font(.custom(AppConstants.Fonts.latoRegular, size: 13))
             .foregroundColor(Color(color))
     }
 }

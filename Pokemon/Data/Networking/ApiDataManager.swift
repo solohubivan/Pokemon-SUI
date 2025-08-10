@@ -12,6 +12,7 @@ final class ApiDataManager {
     private var nextPageURL: String? = "https://pokeapi.co/api/v2/pokemon"
     private var isLoadingPage = false
 
+    // MARK: - Methods for External Use
     func fetchPokemonsPageForGrid(completion: @escaping (Result<[Pokemon], Error>) -> Void) {
         guard !isLoadingPage, let url = nextPageURL else {
             completion(.success([]))
@@ -54,18 +55,16 @@ final class ApiDataManager {
                                 item.minLevel = evo.minLevel
                                 item.evolutionLocation = evo.evolutionLocation
                                 completion(.success(item))
-                            case .failure(let e):
+                            case .failure(_):
                                 completion(.success(item))
-                                print("evolution error:", e)
                             }
                         }
-
-                    case .failure(let e):
+                        
+                    case .failure(_):
                         completion(.success(item))
-                        print("species error:", e)
                     }
                 }
-
+                
             case .failure(let e):
                 completion(.failure(e))
             }

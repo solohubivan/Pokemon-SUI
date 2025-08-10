@@ -31,7 +31,7 @@ struct MainView: View {
     
     // MARK: - UI Components
     private var backgroundImage: some View {
-        Image("backgroundImage")
+        Image(AppConstants.ImagesNames.mainViewBackgroundImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .ignoresSafeArea()
@@ -48,8 +48,8 @@ struct MainView: View {
     
     private var titleLabel: some View {
         HStack {
-            Text("Know Them All")
-                .font(.custom("Lato-Bold", size: 24))
+            Text(viewModel.mainTitleText)
+                .font(.custom(AppConstants.Fonts.latoBold, size: 24))
                 .foregroundColor(Color("titleLabelBlackColor"))
                 .padding(.top, 100)
                 .padding(.leading, 24)
@@ -86,6 +86,6 @@ struct MainView: View {
     }
 }
 
-//#Preview {
-//    MainView()
-//}
+#Preview {
+    MainView()
+}

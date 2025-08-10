@@ -14,6 +14,8 @@ final class MainViewModel {
     var pokemons: [Pokemon] = []
     var isLoading = false
     
+    let mainTitleText: String = "Know Them All"
+    
     private let api = ApiDataManager()
 
     func fetchPokemons() {

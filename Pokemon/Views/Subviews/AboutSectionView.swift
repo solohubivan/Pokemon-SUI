@@ -46,7 +46,7 @@ struct AboutSectionView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 20)
                 .padding(.horizontal, 35)
-                .font(.custom("Lato-Regular", size: 14))
+                .font(.custom(AppConstants.Fonts.latoRegular, size: 14))
                 .foregroundColor(.black)
         }
     }
@@ -54,7 +54,7 @@ struct AboutSectionView: View {
     // MARK: - Local helpers
     private func createInfoLabel(_ text: String, color: UIColor = .black) -> some View {
         Text(text)
-            .font(.custom("Lato-Regular", size: 13))
+            .font(.custom(AppConstants.Fonts.latoRegular, size: 13))
             .foregroundColor(Color(color))
     }
     
@@ -69,7 +69,7 @@ struct AboutSectionView: View {
         let count = (attack ?? 1) / 10
         return HStack(spacing: 4) {
             ForEach(0..<count, id: \.self) { _ in
-                Image("fireSpin")
+                Image(AppConstants.ImagesNames.fireSpinIconImage)
             }
         }
     }
