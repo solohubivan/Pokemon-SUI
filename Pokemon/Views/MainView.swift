@@ -17,13 +17,15 @@ struct MainView: View {
     ]
     
     var body: some View {
-        ZStack {
-            Color.white.ignoresSafeArea()
-            backgroundImage
-            contentView
-        }
-        .onAppear {
-            viewModel.fetchPokemons()
+        NavigationStack {
+            ZStack {
+                Color.white.ignoresSafeArea()
+                backgroundImage
+                contentView
+            }
+            .onAppear {
+                viewModel.fetchPokemons()
+            }
         }
     }
     
@@ -58,20 +60,21 @@ struct MainView: View {
     private var pokemonsList: some View {
         LazyVGrid(columns: columns, spacing: 8) {
             ForEach(Array(viewModel.pokemons.enumerated()), id: \.element) { idx, pokemon in
-                CustomCellView(
-                    name: pokemon.name,
-                    ability: pokemon.abilities?.first ?? "",
-                    imageURL: pokemon.imageURL ?? ""
-                )
-                .aspectRatio(1.481, contentMode: .fit)
-                .onAppear {
+                NavigationLink(
+                    destination: DetailPokemonInfoView(choosedPokemon: pokemon)
+                ) {
+                    CustomCellView(
+                        name: pokemon.name,
+                        ability: pokemon.abilities?.first ?? "",
+                        imageURL: pokemon.imageURL ?? ""
+                    )
+                    .aspectRatio(1.481, contentMode: .fit)
+                }
 
+                .onAppear {
                     if idx >= viewModel.pokemons.count - 3 {
                         viewModel.fetchPokemons()
                     }
-                }
-                .onTapGesture {
-                    print("Обрана ячейка №\(pokemon)")
                 }
             }
             if viewModel.isLoading {
@@ -83,6 +86,6 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}
+//#Preview {
+//    MainView()
+//}

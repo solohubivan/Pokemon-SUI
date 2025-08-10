@@ -37,7 +37,7 @@ struct CustomCellView: View {
         HStack {
             Text(name.uppercased())
                 .font(.custom("Lato-Bold", size: 13))
-                .foregroundColor(Color("nameLabelRedColor"))
+                .foregroundColor(Color("selectedRedColor"))
             Spacer()
         }
         .padding(.top, 32)
@@ -56,24 +56,8 @@ struct CustomCellView: View {
     private var pokemonsImage: some View {
         HStack {
             Spacer()
-            pokemonImageView(urlString: imageURL)
+            RemoteImage(urlString: imageURL)
         }
         .padding(.top, 32)
-    }
-    
-    // MARK: - Private helpers
-    private func pokemonImageView(urlString: String) -> some View {
-        Group {
-            if let url = URL(string: urlString), !urlString.isEmpty {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 48, height: 48)
-                }
-            }
-        }
     }
 }
