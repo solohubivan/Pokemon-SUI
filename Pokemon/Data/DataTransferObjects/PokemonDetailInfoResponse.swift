@@ -18,7 +18,8 @@ struct PokemonDetailInfoResponse: Decodable {
     }
     
     struct NamedResource: Decodable {
-        let name: String; let url: String
+        let name: String
+        let url: String
     }
     
     struct Sprites: Decodable {

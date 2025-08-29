@@ -8,40 +8,40 @@
 import Observation
 import SwiftUI
 
+@MainActor
 @Observable
 final class DetailPokemonInfoViewModel {
-    
+
     var selectedMode: PokemonDetailInfoMode = .about
     var pokemon: Pokemon?
     var isLoading = false
 
-    private let api = ApiDataManager()
+    private let api = APIManager()
     private let cache = PokemonCacheManager.shared
 
-    func configure(with pokemon: Pokemon) {
+    func configure(with pokemon: Pokemon) async {
         if let cached = cache.load(for: pokemon.url) {
             self.pokemon = cached
         } else {
             self.pokemon = pokemon
         }
-        loadIfNeeded()
+        await loadIfNeeded()
     }
 
-    func loadIfNeeded() {
-        guard let p = pokemon else { return }
-        let alreadyHydrated = (p.description != nil) && (p.hp != nil)
+    private func loadIfNeeded() async {
+        guard let current = pokemon else { return }
+        let alreadyHydrated = (current.description != nil) && (current.hp != nil)
         guard !alreadyHydrated, !isLoading else { return }
 
         isLoading = true
-        api.fetchFullDetails(for: p) { [weak self] result in
-            DispatchQueue.main.async {
-                guard let self else { return }
-                self.isLoading = false
-                if case let .success(updated) = result {
-                    self.pokemon = updated
-                    self.cache.save(updated)
-                }
-            }
+        defer { isLoading = false }
+
+        do {
+            let updated = try await api.fetchFullDetails(for: current)
+            self.pokemon = updated
+            cache.save(updated)
+        } catch {
+            
         }
     }
 }

@@ -20,8 +20,8 @@ struct DetailPokemonInfoView: View {
             navigationBar
             contentView
         }
-        .onAppear {
-            viewModel.configure(with: choosedPokemon)
+        .task {
+            await viewModel.configure(with: choosedPokemon)
         }
     }
     

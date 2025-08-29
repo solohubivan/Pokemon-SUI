@@ -37,7 +37,7 @@ struct RemoteImageView: View {
                     .cornerRadius(cornerRadius)
 
             } else {
-                Image(systemName: "AppIcon")
+                Image("fireSpin")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(.gray.opacity(0.5))

@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class MainViewModel {
     
@@ -15,19 +16,18 @@ final class MainViewModel {
     var isLoading = false
     
     let mainTitleText: String = "Know Them All"
-    
-    private let api = ApiDataManager()
 
-    func fetchPokemons() {
+    private let api = APIManager()
+
+    func fetchPokemons() async {
+        guard !isLoading else { return }
         isLoading = true
-        api.fetchPokemonsPageForGrid { [weak self] result in
-            guard let self else { return }
-            self.isLoading = false
-            switch result {
-            case .success(let page):
-                self.pokemons.append(contentsOf: page)
-            case .failure(_): break
-            }
+        defer { isLoading = false }
+        do {
+            let page = try await api.fetchPokemonsPageForGrid()
+            pokemons += page
+        } catch {
+            
         }
     }
 }

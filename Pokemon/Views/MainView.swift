@@ -23,8 +23,8 @@ struct MainView: View {
                 backgroundImage
                 contentView
             }
-            .onAppear {
-                viewModel.fetchPokemons()
+            .task {
+                await viewModel.fetchPokemons()
             }
         }
     }
@@ -70,10 +70,9 @@ struct MainView: View {
                     )
                     .aspectRatio(1.481, contentMode: .fit)
                 }
-
-                .onAppear {
+                .task {
                     if idx >= viewModel.pokemons.count - 3 {
-                        viewModel.fetchPokemons()
+                        await viewModel.fetchPokemons()
                     }
                 }
             }
